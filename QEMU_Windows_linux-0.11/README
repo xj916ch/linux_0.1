@@ -1,0 +1,34 @@
+linux-0.11 QEMU实验环境的搭建
+=============================
+1. 配置环境
+把目录qemu_windows\bin和qemu_windows\msys\bin加入到windows的环境变量中. 
+
+2. 编译
+在src\linux-0.11目录里, cmd终端上运行make就能编译了.
+对应的可以执行make clean.
+
+3. 运行系统
+双击linux-0.11.bat即可.
+
+
+
+
+在ubuntu中使用minix文件系统
+===========================
+1. 准备工作
+(1)sudo apt-get install qemu-utils
+(2)拷贝linux-0.11-devel-060625.qcow2到ubuntu系统.
+
+2. 挂载
+sudo modprobe nbd max_part=8  //加载nbd驱动模块
+sudo qemu-nbd --connect=/dev/nbd0 linux-0.11-devel-060625.qcow2
+sudo fdisk /dev/nbd0 -l  //查看分区
+sudo partx -a /dev/nbd0
+sudo mount /dev/nbd0p1 /mnt  //挂载其中一个分区/dev/nbd0p1到/mnt
+挂载以后就可以在/mnt目录看到minix文件系统的内容了.
+并且可以修改相关文件。
+
+3. 卸载
+sudo umount /mnt
+sudo qemu-nbd --disconnect /dev/nbd0
+卸载后拷出linux-0.11-devel-060625.qcow2, 可以在qemu中运行使用.

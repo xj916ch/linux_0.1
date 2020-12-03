@@ -1,0 +1,54 @@
+文件下载目录：
+=============
+http://www.oldlinux.org/Linux.old/bochs/
+http://www.oldlinux.org/Linux.old/bochs-images/linux-0.12-080324.zip
+
+
+
+Windows运行：
+============
+Bochs-2.4.6
+
+双击 bochsrc-0.12-fd.bxrc
+fd 表明从软盘启动系统.
+-------------------------
+显示 "Press <RETURN> to see SVG-modes available" 时, 按键输入 C.
+当显示 "insert root floppy" 时，在图标栏选择 A(change floopy, A media). 弹出界面，选择 rootimage-0.12.fd 文件,
+单击 ok 确认后，显示 "[/usr/root]" 表明系统加载成功.
+
+双击bochsrc-0.12-hd.bxrc，文件太大，需从网上下载
+hd表明从硬盘启动系统.
+------------------------------------------------
+显示 "Press <RETURN> to see SVG-modes available" 时, 按键输入 C.
+当显示 "Baby login:" 时, 表明系统加载成功.
+默认用户名:root, 无密码.
+
+
+
+Ubuntu运行：
+===========
+$bochs -qf bochsrc-0.12-hd.bxrc
+进入bochs以后，界面黑屏, 进入了debug模式, 
+此时在终端输入c，回车即可显示界面
+
+
+Ubuntu Bochs-2.4.6的安装：
+=========================
+https://www.cnblogs.com/ccode/p/4273092.html
+由于bochs使用sudo apt-get install bochs安装时不带调试功能，所以我们在官网上下载源码，自行编译。
+(1)
+sudo apt-get install bochs vgabios bochs-x bochsbios bochs-doc xorg-dev bochs-sdl
+(2)
+cd bochs-2.4.6
+./configure --enable-debugger --enable-disasm
+make
+sudo make install
+
+FAQ
+---
+(1)
+/usr/bin/ld: gui/libgui.a(gtk_enh_dbg_osdep.o): undefined reference to symbol 'pthread_create@@GLIBC_2.2.5' /
+/lib/x86_64-linux-gnu/libpthread.so.0: error adding symbols: DSO missing from command line
+解决办法：
+在Makefile的LIBS中添加如下内容: -lpthread
+
